@@ -16,7 +16,6 @@ namespace HRCentralDataToSharePoint
 {
     public class SharePointHelper
     {
-
         public static AccessToken GetAccessToken()
         {
             bool getOnlineToken = true;
@@ -26,7 +25,7 @@ namespace HRCentralDataToSharePoint
             try
             {
                 var tokenFilePath = Configer.BaseDirectory + @"token.json";
-                var tokenDuplicateFilePath = Configer.BaseDirectory + @"TempData\Token_"  +DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss") + ".json";
+                var tokenDuplicateFilePath = Configer.BaseDirectory + @"TempData\Token_" + DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss") + ".json";
 
                 if (File.Exists(tokenFilePath))
                 {
@@ -81,13 +80,12 @@ namespace HRCentralDataToSharePoint
             }
         }
 
-
         public static string PostDataViaRestAPI(string accessToken, byte[] bytesArray)
         {
-            //SetGlobalProxy();
-
             Uri url = new Uri(string.Format(@"{0}/_api/web/GetFolderByServerRelativeUrl('{1}')/Files/add(url='{2}.xlsx',overwrite=true)",
-                Configer.SharePointSiteUrl, Configer.SharePointFolder, Configer.SharePointExcelName));
+                Configer.SharePointSiteUrl, 
+                Configer.SharePointFolder, 
+                Configer.SharePointExcelName));
 
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
             request.AllowAutoRedirect = true;
@@ -110,16 +108,20 @@ namespace HRCentralDataToSharePoint
             try
             {
                 HttpWebResponse resp = (HttpWebResponse)request.GetResponse();
-                return "Excel upload Successfully!";
+                if (resp.StatusCode == HttpStatusCode.OK)
+                {
+                    return "Excel uploaded to Sharepoint Successfully!";
+                }
+                else
+                {
+                    return $"Excel failed to be uploaded to Sharepoint. StatusDescription:{resp.StatusDescription}";
+                }
             }
             catch (Exception ex)
             {
                 throw ex;
             }
         }
-
-
-
     }
 }
 

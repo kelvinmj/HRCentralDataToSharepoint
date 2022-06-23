@@ -14,12 +14,10 @@ namespace HRCentralDataToSharePoint
                 Configer.SetGlobalProxy();
                 var data = ExcelHelper.GetDataBytesFromDB();
 
-                //if (Configer.IsUploadToSP == "Y")
-                //{
                 var token = SharePointHelper.GetAccessToken();
                 var message = SharePointHelper.PostDataViaRestAPI(token.access_token, data);
                 LogHelper.InfoLog(message);
-                //}
+
                 LogHelper.InfoLog("Job End   *****");
             }
             catch (Exception ex)

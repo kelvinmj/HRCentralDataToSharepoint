@@ -141,16 +141,16 @@ namespace HRCentralDataToSharePoint
                 ClearFilesBeforeGivenDays(outputFolderPath, days);
             }
 
-            /////datatable : ok from entityframework connection
             var data = GetEmployeeDataTable();
+            List<string> columns = new List<string> { "cwid", "bi_last_name", "bi_first_name", "cost_center", "staff_type" };
+            foreach (string column in columns)
+            {
+                if (data.Columns.Contains(column))
+                {
+                    data.Columns[column].SetOrdinal(columns.IndexOf(column));
+                }
+            }
             return ExportWithTemp(data, tempFilePath, outputFilePath);
-
-
-            //{
-            //    var data = GetEmployeeDataList();
-            //    return ExportWithTemp<Employee>(data, tempFilePath, outputFilePath);
-            //}
-
         }
 
 

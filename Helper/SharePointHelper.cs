@@ -47,7 +47,7 @@ namespace HRCentralDataToSharePoint
                     WebRequest webRequest = WebRequest.Create(serviceURL);
                     webRequest.ContentType = "application/x-www-form-urlencoded";
                     webRequest.Method = "POST";
-
+                    webRequest.Timeout = -1;
                     byte[] payload = System.Text.Encoding.ASCII.GetBytes(body);
                     webRequest.ContentLength = payload.Length;
                     using (System.IO.Stream outputStream = webRequest.GetRequestStream())
@@ -95,7 +95,7 @@ namespace HRCentralDataToSharePoint
             //request.ContentType = "application/json";
             //request.UserAgent = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36";
             //request.ContentType = "application/x-www-form-urlencoded";
-            request.Timeout = 1000 * 60 * 5;
+            request.Timeout = -1;
             request.KeepAlive = true;
 
             byte[] postData = bytesArray;

@@ -142,7 +142,7 @@ namespace HRCentralDataToSharePoint
             }
 
             var data = GetEmployeeDataTable();
-            List<string> columns = new List<string> { "cwid", "bi_last_name", "bi_first_name", "cost_center", "staff_type" };
+            List<string> columns = new List<string> { "cwid", "bi_last_name", "bi_first_name", "cost_center", "email_address", "staff_type" };
             foreach (string column in columns)
             {
                 if (data.Columns.Contains(column))
